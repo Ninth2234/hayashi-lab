@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find tactile_simulation)/launch/tactile_simulation.launch"/>
+
+    <node name="camera" pkg="tactile_sensor" type="tactile_sensor_camera2.py"/>
+
+</launch>

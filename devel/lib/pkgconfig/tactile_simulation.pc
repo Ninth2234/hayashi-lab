@@ -1,0 +1,8 @@
+prefix=/home/hayashi/catkin_ws/devel
+
+Name: tactile_simulation
+Description: Description of tactile_simulation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

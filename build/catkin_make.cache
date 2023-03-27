@@ -1,0 +1,2 @@
+dxl_interface:dynamixel_controllers:tactile_sensor:tactile_simulation:test_map
+-DCATKIN_DEVEL_PREFIX=/home/hayashi/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/hayashi/catkin_ws/install -G Unix Makefiles

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node name="pybullet" pkg="tactile_simulation" type="tactile_sim.py" required="true" output="screen"/>
+
+    <node name ="static_transform" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 map my_frame 10"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tactile_simulation)/config/config.rviz"/>
+
+
+</launch>

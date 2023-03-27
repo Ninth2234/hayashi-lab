@@ -1,0 +1,3 @@
+import oc
+
+Oc = OctreeTestCase()

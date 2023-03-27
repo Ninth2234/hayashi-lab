@@ -1,0 +1,14 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/hayashi/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "./src/tactile_simulation/src"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/hayashi/catkin_ws/devel/lib/python3/dist-packages",
+        "/home/hayashi/catkin_ws/src/tactile_simulation/src/tactile_simulation",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "./src/tactile_simulation/src"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/src/tactile_simulation"
+}
