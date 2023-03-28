@@ -54,7 +54,6 @@ CMAKE_BINARY_DIR = /home/hayashi/catkin_ws/build
 
 # The main recursive "all" target.
 all: gtest/all
-all: test_map/all
 all: dxl_interface/all
 all: tactile_sensor/all
 all: tactile_simulation/all
@@ -64,7 +63,6 @@ all: dynamixel_controllers/all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
-preinstall: test_map/preinstall
 preinstall: dxl_interface/preinstall
 preinstall: tactile_sensor/preinstall
 preinstall: tactile_simulation/preinstall
@@ -79,7 +77,6 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
-clean: test_map/clean
 clean: dxl_interface/clean
 clean: tactile_sensor/clean
 clean: tactile_simulation/clean
@@ -217,7 +214,7 @@ tactile_sensor/preinstall:
 .PHONY : tactile_sensor/preinstall
 
 # Recursive "clean" directory target.
-tactile_sensor/clean:
+tactile_sensor/clean: tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 .PHONY : tactile_sensor/clean
 
@@ -238,24 +235,6 @@ tactile_simulation/preinstall:
 tactile_simulation/clean:
 
 .PHONY : tactile_simulation/clean
-
-#=============================================================================
-# Directory level rules for directory test_map
-
-# Recursive "all" directory target.
-test_map/all:
-
-.PHONY : test_map/all
-
-# Recursive "preinstall" directory target.
-test_map/preinstall:
-
-.PHONY : test_map/preinstall
-
-# Recursive "clean" directory target.
-test_map/clean: test_map/CMakeFiles/_catkin_empty_exported_target.dir/clean
-
-.PHONY : test_map/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -500,33 +479,6 @@ gtest: gtest/googletest/CMakeFiles/gtest.dir/rule
 gtest/googletest/CMakeFiles/gtest.dir/clean:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/clean
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
-
-#=============================================================================
-# Target rules for target test_map/CMakeFiles/_catkin_empty_exported_target.dir
-
-# All Build rule for target.
-test_map/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f test_map/CMakeFiles/_catkin_empty_exported_target.dir/build.make test_map/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f test_map/CMakeFiles/_catkin_empty_exported_target.dir/build.make test_map/CMakeFiles/_catkin_empty_exported_target.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hayashi/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : test_map/CMakeFiles/_catkin_empty_exported_target.dir/all
-
-# Build rule for subdir invocation for target.
-test_map/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hayashi/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 test_map/CMakeFiles/_catkin_empty_exported_target.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hayashi/catkin_ws/build/CMakeFiles 0
-.PHONY : test_map/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: test_map/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# clean rule for target.
-test_map/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f test_map/CMakeFiles/_catkin_empty_exported_target.dir/build.make test_map/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : test_map/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target dxl_interface/CMakeFiles/std_msgs_generate_messages_py.dir
@@ -932,6 +884,33 @@ rosgraph_msgs_generate_messages_py: dxl_interface/CMakeFiles/rosgraph_msgs_gener
 dxl_interface/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean:
 	$(MAKE) -f dxl_interface/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make dxl_interface/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
 .PHONY : dxl_interface/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
+
+#=============================================================================
+# Target rules for target tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir
+
+# All Build rule for target.
+tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/build.make tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/build.make tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hayashi/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
+.PHONY : tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/all
+
+# Build rule for subdir invocation for target.
+tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hayashi/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hayashi/catkin_ws/build/CMakeFiles 0
+.PHONY : tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# clean rule for target.
+tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/build.make tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : tactile_sensor/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target dynamixel_controllers/CMakeFiles/sensor_msgs_generate_messages_cpp.dir

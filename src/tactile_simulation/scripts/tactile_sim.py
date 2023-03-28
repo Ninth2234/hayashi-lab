@@ -9,9 +9,11 @@ import pybullet as p
 import pybullet_data
 import OpenGL
 
-from utils.ContactTip import ContactTip
+from utils.ContactTip import ContactTip1
 from utils.meshPointPublisher import MeshPointPublisher
 from utils.utils import *
+from utils.ForceProjection import *
+from utils.ImagePublisher import ImagePublisher
 
 from std_msgs.msg import Header
 from sensor_msgs.msg import Image
@@ -40,63 +42,26 @@ p.setTimeStep(TIME_STEP)
 
 p.setAdditionalSearchPath(packagePath)
 
-contactTip = ContactTip([0,0,2])
+contactTip = ContactTip1([0,0,2])
 # planeId = p.loadURDF(packagePath+"/urdf/plane.urdf", [0,0,0], [0,0,0,1])
 
-clothId = p.loadSoftBody("softbody/myCloth.obj", basePosition = [0,0,1.5], scale = 1., mass = 1., useNeoHookean = 0, useBendingSprings=1,useMassSpring=1, springElasticStiffness=40, springDampingStiffness=.1, springDampingAllDirections = 1, useSelfCollision = 0, frictionCoeff = .5, useFaceContact=1)
+clothId = p.loadSoftBody("softbody/myCloth.obj", basePosition = [0,0,1.5], scale = 1., mass = 1., useNeoHookean = 0, useBendingSprings=1,useMassSpring=1, springElasticStiffness=400, springDampingStiffness=.1, springDampingAllDirections = 1, useSelfCollision = 0, frictionCoeff = .5, useFaceContact=1)
 p.changeVisualShape(clothId, -1, flags=p.VISUAL_SHAPE_DOUBLE_SIDED)
 setBoundaryAtEdge(clothId)    
 
 
 rospy.init_node("tactile_sim")
 
-class ImagePublisher:
-    def __init__(self):
-        self.pub = rospy.Publisher("image",Image,queue_size=2)
 
-        self.width = 1080
-        self.height = 720
-
-        fov = 62
-        aspect = self.width / self.height
-        near = 0.02
-        far = 2
-
-        self.view_matrix = p.computeViewMatrix([0, 0, -0.2], [0, 0, 1], [1, 0, 0])
-        self.projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, near, far)
-
-        self.msg = Image()
-        self.msg.header = Header()
-        self.msg.header.seq = 0
-        self.msg.header.stamp = rospy.Time.now()
-        self.msg.header.frame_id = "1"
-        self.msg.height = self.height
-        self.msg.width = self.width
-        self.msg.encoding = "mono8"
-
-        self.bridge = CvBridge()
-
-    ## This funtion is so slow.
-    def publish(self):
-        
-        image = p.getCameraImage(self.width,self.height,self.view_matrix,self.projection_matrix,shadow=False,renderer=p.ER_BULLET_HARDWARE_OPENGL)[2]
-        
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        self.msg = self.bridge.cv2_to_imgmsg(image, encoding="passthrough")
-        
-        self.pub.publish(self.msg)
-            
     
-def callback(msg:Point):
-    contactTip.setPosition(msg.x,msg.y,msg.z)
 
-rospy.Subscriber("/target_point", Point, callback)
 
 x = 100
 imagePublisher = ImagePublisher()
 
 meshPointPublisher = MeshPointPublisher(clothId,7)
+
+forceDist = ForceDist(clothId, contactTip.id)
 
 while p.isConnected() and not rospy.is_shutdown():
 
@@ -105,14 +70,16 @@ while p.isConnected() and not rospy.is_shutdown():
         imagePublisher.publish()
         x=0
     x+=1
+
+    # print(forceDist.queue.qsize)
     
     contactTip.update()
     meshPointPublisher.publish()
     meshPointPublisher.displayMarkerRviz()
-    
+    forceDist.captureAndHold()
         
     p.stepSimulation()  
-
+    sleep(0.001)
     #print(time()-srtTime)
     
 

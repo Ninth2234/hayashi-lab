@@ -2,6 +2,8 @@ import pybullet as p
 import time
 import math
 import pybullet_data
+import rospy
+from geometry_msgs.msg import Point
 
 
 
@@ -21,13 +23,14 @@ class PrismaticJoint:
   
 
 
-class ContactTip:
+class ContactTip1:
   def __init__(self, basePosition):
     self.id = p.loadURDF(URDF_PATH, basePosition, [0,0,0,1], 0)
     self.joints = []
 
     self.buttonId = p.addUserDebugParameter(" manual control", 3,1,0)
     self.isManual = 0
+    rospy.Subscriber("/target_point", Point, self.callback)
     
     p.createConstraint(self.id,-1,-1,-1,p.JOINT_FIXED, [0, 0, 0], [0, 0, 0], basePosition)    
   
@@ -55,8 +58,12 @@ class ContactTip:
     if not self.isManual:
       desiredPos = [z, y, x]
       for j in self.joints:
-        p.setJointMotorControl2(self.id, j.jointIndex, p.POSITION_CONTROL, desiredPos.pop(),maxVelocity=0.5)
+        p.setJointMotorControl2(self.id, j.jointIndex, p.POSITION_CONTROL, desiredPos.pop(),maxVelocity=2)
 
+  def callback(self,msg:Point):
+    self.setPosition(msg.x,msg.y,msg.z)
+
+    
       
 
 

@@ -28,6 +28,6 @@ def poseArray2Numpy(msg:PoseArray):
 
 def float32MultiArray2Numpy(msg:Float32MultiArray):
     
-    print(len(msg.data))
+    # print(len(msg.data))
     return np.array(msg.data).reshape(msg.layout.dim[0].size, msg.layout.dim[1].size)
     

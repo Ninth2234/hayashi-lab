@@ -25,12 +25,14 @@ class DataLogger:
         rospy.init_node('logger')
     
         self.sub_feature = rospy.Subscriber('/features', Float32MultiArray, self.callback_feature)
+        self.sub_forceDist = rospy.Subscriber('/force_dist', Float32MultiArray, self.callback_forceDist)
         self.sub_mesh_position = rospy.Subscriber('/mesh_position', PoseArray, self.callback_mesh_position)
     
         #self.pub_contact_pose = rospy.Publisher('/sensor_data', String, queue_size=10)
         
         
         self.lock_feature = threading.Lock()
+        self.lock_forceDist = threading.Lock()
         self.lock_mesh = threading.Lock()
 
 
@@ -41,6 +43,11 @@ class DataLogger:
         self.lock_feature.acquire()
         self.feature_data = float32MultiArray2Numpy(data)
         self.lock_feature.release()
+
+    def callback_forceDist(self, data):
+        self.lock_forceDist.acquire()
+        self.forceDist_data = float32MultiArray2Numpy(data)
+        self.lock_forceDist.release()        
         
 
     def callback_mesh_position(self, data):
@@ -57,13 +64,17 @@ class DataLogger:
     
     def capture_data(self,step):
         self.lock_feature.acquire()
+        self.lock_forceDist.acquire()
         self.lock_mesh.acquire()
 
-        if hasattr(self, 'feature_data') and hasattr(self, 'mesh_position_data'):
+        if hasattr(self, 'feature_data') and hasattr(self, 'mesh_position_data') and hasattr(self,'forceDist_data'):
+            print("saved")
             np.savetxt(FILE_DIRECTORY+f'feature_{step}.csv', self.feature_data, delimiter=',')
+            np.savetxt(FILE_DIRECTORY+f'forceDist_{step}.csv', self.forceDist_data, delimiter=',')
             np.savetxt(FILE_DIRECTORY+f'mesh_{step}.csv', self.mesh_position_data, delimiter=',')
 
         self.lock_mesh.release()
+        self.lock_forceDist.release()
         self.lock_feature.release()
         
 
@@ -76,16 +87,16 @@ if __name__ == '__main__':
         # Publish sensor data at a rate of 10 Hz
         rate = rospy.Rate(0.5)
         # while not rospy.is_shutdown():
-        for step in range(1000):
+        for step in range(100):
             if rospy.is_shutdown():
                 break
             
             dataLogger.publish_random_point()
 
-            sleep(1.5)
+            sleep(5)
 
             dataLogger.capture_data(step)
-            
+            sleep(1)
             print("---------------")
             print()
             print("step",step)

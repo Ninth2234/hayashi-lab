@@ -9,7 +9,7 @@
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/hayashi/catkin_ws/build/devel:$CMAKE_PREFIX_PATH"
 export LD_LIBRARY_PATH="/home/hayashi/catkin_ws/build/devel/lib:$LD_LIBRARY_PATH"
-export PATH='/opt/ros/noetic/bin:/home/hayashi/.local/bin:/home/hayashi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+export PATH='/opt/ros/noetic/bin:/home/hayashi/.local/bin:/home/hayashi/catkin_ws/catkin_venv/bin:/home/hayashi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
 export PKG_CONFIG_PATH="/home/hayashi/catkin_ws/build/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/hayashi/catkin_ws/build'
 export PYTHONPATH="/home/hayashi/catkin_ws/build/devel/lib/python3/dist-packages:$PYTHONPATH"
